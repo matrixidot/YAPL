@@ -32,3 +32,10 @@ YAPL/obj/YAPL.csproj.nuget.g.props
 YAPL/obj/YAPL.csproj.nuget.g.targets
 .idea/.idea.YAPL/.idea/projectSettingsUpdater.xml
 .idea/.idea.YAPL/.idea/workspace.xml
+
+.fake
+.vscode/launch.json
+.vscode/tasks.json
+YAPL/Program.cs
+YAPL/obj/Debug/net7.0/apphost
+YAPL/bin/Debug/net7.0/YAPL

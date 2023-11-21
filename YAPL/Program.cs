@@ -41,11 +41,19 @@ class Program {
 		Console.Write(marker);
 		Console.Write(node.Type);
 		
+		if (node.Type == TokenType.NUMBER) {
+			Console.Write($" : {((Number)node).Value}");
+		}
+
+		if (node.Type == TokenType.BIN_EXP) {
+			Console.Write($"\n{indent + "    "}├── {((BinExp)node).Op}");
+		}
+
 		if (node is Token t && t.Value is not null)
 			Console.Write(" " + t.Value);
+			
 		
 		Console.WriteLine();
-		
 		indent += isLast ? "    " : "│   ";
 		
 		Node? lastChild = node.GetChildren().LastOrDefault();
