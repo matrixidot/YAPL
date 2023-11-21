@@ -8,6 +8,11 @@ using runtime.Values;
 class Program {
 	public static void Main(string[] args) {
 		bool showTree = false;
+		Interpreter interpreter = new();
+		Environment env = new(null);
+		env.DeclareVar("true", new BoolValue(true), true);
+		env.DeclareVar("false", new BoolValue(false), true);
+		env.DeclareVar("null", new NullValue(), true);
 		while (true) {
 			Console.Write("> ");
 			string? line = Console.ReadLine();
@@ -26,14 +31,6 @@ class Program {
 			if (showTree) {
 				PrettyPrint(tree.Root);
 			}
-
-			Interpreter interpreter = new();
-			Environment env = new(null);
-			env.DeclareVar("x", new NumberValue("100"));
-			env.DeclareVar("true", new BoolValue(true));
-			env.DeclareVar("false", new BoolValue(false));
-			env.DeclareVar("null", new NullValue());
-			
 			Value result = interpreter.Evaluate(tree.Root, env);
 			Console.WriteLine(result.Val);
 		}
@@ -51,7 +48,8 @@ class Program {
 		}
 
 		if (node.Type == TokenType.BIN_EXP) {
-			Console.Write($"\n{indent + "    "}├── {((BinExp)node).Op}");
+			string toAdd = isLast ? "    " : "│   ";
+			Console.Write($"\n{indent + toAdd}├── {((BinExp)node).Op}");
 		}
 
 		if (node.Type == TokenType.IDENTIFIER) {

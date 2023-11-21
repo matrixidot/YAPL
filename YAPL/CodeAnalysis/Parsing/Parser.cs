@@ -3,6 +3,8 @@
 using Exceptions;
 using lexing;
 using Nodes;
+using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
 using Expression = Nodes.Expression;
 
 public class Parser {
@@ -14,13 +16,39 @@ public class Parser {
 	}
 	
 	public SyntaxTree Parse() {
-		Expression expression = ParseTerm();
+		Node expression = ParseStmt();
 		Token endOfFileToken = At();
 		return new SyntaxTree(expression, endOfFileToken);
 	}
 
-	private Expression ParseTerm() {
-		return ParseExpr();
+	private Node ParseStmt() {
+		switch (At().Type) {
+			case TokenType.VAR or TokenType.FINAL:
+				return ParseVarDec();
+			
+			default:
+				return ParseExpr();
+		}
+	}
+
+	// var ident
+	// (var / final)  ident = EXPR
+	private Node ParseVarDec() {
+		bool isFinal = At().Type == TokenType.FINAL;
+		string identifier = Expect(TokenType.IDENTIFIER, $"Expected <IDENTIFIER> after <{Eat().Type}> but got ").Value;
+		if (At().Type == TokenType.SEMICOLON) {
+			if (isFinal) {
+				throw new FinalValueUnassignedError("Must assign value to final variable, no value provided");
+			}
+
+			Expect(TokenType.SEMICOLON, "Expected <SEMICOLON> to finish var declaration but got ");
+			return new VarDec(false, identifier);
+		}
+
+		Expect(TokenType.EQUALS, $"Expected <EQUALS> to assign var but got ");
+		VarDec declaration = new (isFinal, identifier, ParseExpr());
+		Expect(TokenType.SEMICOLON, $"Expected <SEMICOLON> to finish var declaration but got ");
+		return declaration;
 	}
 
 	private Expression ParseExpr() {
@@ -80,12 +108,11 @@ public class Parser {
 	}
 
 	private Token Expect(TokenType expected, string errorMessage) {
-		Token prev = tokens[0];
-		tokens.RemoveAt(0);
+		Token prev = Eat();
 		if (prev == null)
 			throw new UnexpectedTokenError("Error while parsing: " + errorMessage + "null instead.");
 		if (prev.Type != expected)
-			throw new UnexpectedTokenError("Error while parsing: " + errorMessage + prev.Value + " instead");
+			throw new UnexpectedTokenError("Error while parsing: " + errorMessage + prev.Type + " instead");
 		return prev;
 	}
 	

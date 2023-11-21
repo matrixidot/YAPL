@@ -6,7 +6,8 @@ using util;
 public class Lexer {
 	public readonly Dictionary<String, TokenType> KEYWORDS = new()
 	{ 
-	{ "let", TokenType.LET },
+	{ "var", TokenType.VAR },
+	{ "final", TokenType.FINAL },
 	};
 
 	private Token token(string value, TokenType type) {
@@ -46,6 +47,9 @@ public class Lexer {
 					break;
 				case ')':
 					tokens.Add(token(src.Shift(), TokenType.C_PAREN));
+					break;
+				case ';':
+					tokens.Add(token(src.Shift(), TokenType.SEMICOLON));
 					break;
 				default: {
 					if (char.IsDigit(src.Current())) {

@@ -6,21 +6,29 @@ using Values;
 public class Environment {
 	private Environment? Parent;
 	private Dictionary<string, Value> Variables = new();
+	private List<string> Constants = new();
 
 	public Environment(Environment? parent) {
 		Parent = parent;
 	}
 
-	public Value DeclareVar(string name, Value value) {
+	public Value DeclareVar(string name, Value value, bool isFinal) {
+		Console.WriteLine($"{name}, {value.Val}");
 		if (Variables.ContainsKey(name)) {
 			throw new VariableAleadyDefinedError($"Cannot declare variable {name}, it is already defined.");
 		}
 		Variables.Add(name, value);
+		
+		if (isFinal)
+			Constants.Add(name);
 		return value;
 	}
 
 	public Value AssignVar(string name, Value value) {
 		Environment env = Resolve(name);
+		if (env.Constants.Contains(name)) {
+			throw new FinalReassignError($"Cannot reassign {name} as it is final.");
+		}
 		env.Variables[name] = value;
 		return value;
 	}

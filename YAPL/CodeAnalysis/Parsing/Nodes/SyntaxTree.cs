@@ -4,10 +4,10 @@ using CodeAnalysis;
 using CodeAnalysis.Parsing;
 
 public class SyntaxTree {
-	public Expression Root { get; }
+	public Node Root { get; }
 	public Token EndOfFileToken { get; }
 
-	public SyntaxTree(Expression root, Token endOfFileToken) {
+	public SyntaxTree(Node root, Token endOfFileToken) {
 		Root = root;
 		EndOfFileToken = endOfFileToken;
 	}

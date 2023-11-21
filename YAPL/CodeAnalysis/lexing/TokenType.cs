@@ -8,21 +8,30 @@ public enum TokenType {
 	SLASH,
 	MOD,
 	EQUALS,
+	
+	// GROUPING
 	O_PAREN,
 	C_PAREN,
+	// TYPES
+	NUMBER,
+	IDENTIFIER,
+	EOF,
+	STRING,
 	
 	// KEYWORDS
-	LET,
-	
+	VAR,
+	FINAL,
+
+	// NODES
+	// STMTS
+	VAR_DEC,
 	// EXPRESSIONS
 	BIN_EXP,
 	PAR_EXP,
 	
 	// OTHER
-	NUMBER,
-	IDENTIFIER,
-	EOF,
-	STRING,
+	SEMICOLON,
+	
 
 
 

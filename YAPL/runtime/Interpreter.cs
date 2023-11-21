@@ -16,9 +16,16 @@ public class Interpreter {
 				return EvalIdentifier(((Identifier)Node), env);
 			case TokenType.BIN_EXP:
 				return EvalBinExp((BinExp) Node, env);
+			case TokenType.VAR_DEC:
+				return EvalVarDec((VarDec)Node, env);
 			default:
 				throw new UnknownNodeError($"Node of type <{Node.Type}> has not yet been defined.");
 		}
+	}
+
+	private Value EvalVarDec(VarDec varDec, Environment env) {
+		Value val = varDec.Value != null ? Evaluate(varDec.Value, env) : new NullValue();
+		return env.DeclareVar(varDec.Identifier, val, varDec.IsFinal);
 	}
 
 	private Value EvalIdentifier(Identifier ident, Environment env) {
