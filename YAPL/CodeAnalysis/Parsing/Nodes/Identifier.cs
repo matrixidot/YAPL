@@ -4,13 +4,13 @@ using CodeAnalysis;
 
 public class Identifier : Expression {
 	public override TokenType Type => TokenType.IDENTIFIER;
-	public Token Symbol { get; }
+	public string Symbol { get; }
 
-	public Identifier(Token symbol) {
+	public Identifier(string symbol) {
 		Symbol = symbol;
 	}
 
 	public override IEnumerable<Node> GetChildren() {
-		yield return Symbol;
+		yield break;
 	}
 }

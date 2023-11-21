@@ -6,8 +6,7 @@ using util;
 public class Lexer {
 	public readonly Dictionary<String, TokenType> KEYWORDS = new()
 	{ 
-	{ "let", TokenType.LET }, 
-	{"null", TokenType.NULL},
+	{ "let", TokenType.LET },
 	};
 
 	private Token token(string value, TokenType type) {

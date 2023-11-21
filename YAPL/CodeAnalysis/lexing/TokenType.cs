@@ -22,8 +22,8 @@ public enum TokenType {
 	NUMBER,
 	IDENTIFIER,
 	EOF,
-	NULL,
-	
-	
-	
+	STRING,
+
+
+
 }

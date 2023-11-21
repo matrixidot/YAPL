@@ -31,7 +31,7 @@ public class Parser {
 		Expression left = ParseMultiExpr();
 
 		while (At().Type is TokenType.PLUS or TokenType.MINUS) {
-			string op = eat().Value;
+			string op = Eat().Value;
 			Expression right = ParseMultiExpr();
 			left = new BinExp(left, op, right);
 		}
@@ -43,7 +43,7 @@ public class Parser {
 		Expression left = ParsePrimaryExpr();
 
 		while (At().Type is TokenType.STAR or TokenType.SLASH or TokenType.MOD) {
-			string op = eat().Value;
+			string op = Eat().Value;
 			Expression right = ParsePrimaryExpr();
 			left = new BinExp(left, op, right);
 		}
@@ -55,15 +55,13 @@ public class Parser {
 		TokenType tk = At().Type;
 		switch (tk) {
 			case TokenType.IDENTIFIER:
-				return new Identifier(eat());
+				return new Identifier(Eat().Value);
 			case TokenType.NUMBER:
-				return new Number(eat().Value);
-			case TokenType.NULL:
-				return new Null(eat().Value);
+				return new Number(Eat().Value);
 			case TokenType.O_PAREN:
-				eat();
+				Eat();
 				Expression value = ParseExpr();
-				expect(TokenType.C_PAREN, "Expected: ')', but found: ");
+				Expect(TokenType.C_PAREN, "Expected: ')', but found: ");
 				return value;
 			default:
 				throw new UnknownTokenError($"Unexpected token found during parsing: {{ {At().Type}, {At().Value} }}");
@@ -75,13 +73,13 @@ public class Parser {
 		return tokens[0];
 	}
 
-	private Token eat() {
+	private Token Eat() {
 		Token prev = tokens[0];
 		tokens.RemoveAt(0);
 		return prev;
 	}
 
-	private Token expect(TokenType expected, string errorMessage) {
+	private Token Expect(TokenType expected, string errorMessage) {
 		Token prev = tokens[0];
 		tokens.RemoveAt(0);
 		if (prev == null)

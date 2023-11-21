@@ -10,17 +10,16 @@ class Program {
 		bool showTree = false;
 		while (true) {
 			Console.Write("> ");
-			string line = Console.ReadLine();
+			string? line = Console.ReadLine();
 			if (string.IsNullOrWhiteSpace(line)) return;
-			if (line == "#st") {
-				showTree = !showTree;
-				Console.WriteLine(showTree ? "Showing parse trees." : "Not showing parse trees.");
-				continue;
-			}
-			if (line == "#cls")
-			{
-				Console.Clear();
-				continue;
+			switch (line) {
+				case "#st":
+					showTree = !showTree;
+					Console.WriteLine(showTree ? "Showing parse trees." : "Not showing parse trees.");
+					continue;
+				case "#cls":
+					Console.Clear();
+					continue;
 			}
 
 			SyntaxTree tree = SyntaxTree.Parse(line);
@@ -28,8 +27,14 @@ class Program {
 				PrettyPrint(tree.Root);
 			}
 
-			Interpreter interpreter = new Interpreter();
-			Value result = interpreter.Evaluate(tree.Root);
+			Interpreter interpreter = new();
+			Environment env = new(null);
+			env.DeclareVar("x", new NumberValue("100"));
+			env.DeclareVar("true", new BoolValue(true));
+			env.DeclareVar("false", new BoolValue(false));
+			env.DeclareVar("null", new NullValue());
+			
+			Value result = interpreter.Evaluate(tree.Root, env);
 			Console.WriteLine(result.Val);
 		}
 	}
@@ -49,6 +54,10 @@ class Program {
 			Console.Write($"\n{indent + "    "}├── {((BinExp)node).Op}");
 		}
 
+		if (node.Type == TokenType.IDENTIFIER) {
+			Console.Write($" : {((Identifier)node).Symbol}");
+		}
+		
 		if (node is Token t && t.Value is not null)
 			Console.Write(" " + t.Value);
 			
