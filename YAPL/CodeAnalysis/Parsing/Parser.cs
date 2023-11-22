@@ -51,9 +51,22 @@ public class Parser {
 		return declaration;
 	}
 
-	private Expression ParseExpr() {
-		return ParseAdditiveExpr();
+	private Expression ParseAssignmentExpr() {
+		var left = ParseAdditiveExpr();
+		if (At().Type == TokenType.EQUALS) {
+			Eat();
+			var value = ParseAssignmentExpr();
+			Expect(TokenType.SEMICOLON, "Expected <SEMICOLON> to assign variable but got ");
+			return new AssignExp(left, value);
+		}
+		return left;
 	}
+
+	private Expression ParseExpr() {
+		return ParseAssignmentExpr();
+	}
+
+
 
 	private Expression ParseAdditiveExpr() {
 		Expression left = ParseMultiExpr();

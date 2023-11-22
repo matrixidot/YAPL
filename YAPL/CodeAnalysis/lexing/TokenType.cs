@@ -28,6 +28,7 @@ public enum TokenType {
 	// EXPRESSIONS
 	BIN_EXP,
 	PAR_EXP,
+	ASSIGN_EXP,
 	
 	// OTHER
 	SEMICOLON,

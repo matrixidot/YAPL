@@ -18,9 +18,19 @@ public class Interpreter {
 				return EvalBinExp((BinExp) Node, env);
 			case TokenType.VAR_DEC:
 				return EvalVarDec((VarDec)Node, env);
+			case TokenType.ASSIGN_EXP:
+				return EvalVarAssignment((AssignExp)Node, env);
 			default:
 				throw new UnknownNodeError($"Node of type <{Node.Type}> has not yet been defined.");
 		}
+	}
+
+	private Value EvalVarAssignment(AssignExp expr, Environment env) {
+		if (expr.Asignee.Type != TokenType.IDENTIFIER) {
+			throw new AssignToNonVarError($"Attempted to assign a value to <{expr.Asignee.Type}> expected <IDENTIFIER>.");
+		}
+		var varName = ((Identifier)expr.Asignee).Symbol;
+		return env.AssignVar(varName, Evaluate(expr.Value, env));
 	}
 
 	private Value EvalVarDec(VarDec varDec, Environment env) {
