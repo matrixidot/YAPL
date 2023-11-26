@@ -1,4 +1,4 @@
-﻿namespace YAPL.CodeAnalysis.Parsing.Nodes; 
+﻿namespace YAPL.Frontend.Parsing.Nodes.Expressions; 
 
 public class NumericLiteral : Expression {
 	public override NodeType Type => NodeType.NUMERIC_LITERAL;

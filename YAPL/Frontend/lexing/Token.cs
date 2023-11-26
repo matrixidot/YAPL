@@ -1,4 +1,4 @@
-﻿namespace YAPL.CodeAnalysis.Lexing; 
+﻿namespace YAPL.Frontend.lexing; 
 
 public class Token {
 	

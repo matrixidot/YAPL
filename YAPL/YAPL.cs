@@ -1,8 +1,9 @@
 ﻿namespace YAPL;
 
-using CodeAnalysis.Lexing;
-using CodeAnalysis.Parsing;
-using CodeAnalysis.Parsing.Nodes;
+using Frontend.Parsing;
+using Frontend.Parsing.Nodes.Statements;
+using Runtime;
+using Runtime.Values;
 
 class YAPL {
 	public static void Main(string[] args) {
@@ -14,7 +15,10 @@ class YAPL {
 				break;
 
 			Program program = parser.produceAST(line);
-			Console.WriteLine(program);
+			//Console.WriteLine(program);
+
+			RuntimeValue result = Interpreter.Evaluate(program);
+			Console.WriteLine(result);
 		}
 	}
 }

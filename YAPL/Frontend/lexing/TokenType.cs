@@ -1,4 +1,4 @@
-﻿namespace YAPL.CodeAnalysis.Lexing;
+﻿namespace YAPL.Frontend.lexing;
 
 public enum TokenType {
 	// Literal Types
@@ -16,4 +16,5 @@ public enum TokenType {
 
 	// OTHER
 	EOF,
+	NULL,
 }

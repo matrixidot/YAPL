@@ -1,4 +1,4 @@
-﻿namespace YAPL.CodeAnalysis.Parsing.Nodes; 
+﻿namespace YAPL.Frontend.Parsing.Nodes.Expressions; 
 
 public class Identifier : Expression {
 	public override NodeType Type => NodeType.IDENTIFIER;

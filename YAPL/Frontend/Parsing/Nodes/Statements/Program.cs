@@ -1,10 +1,10 @@
-﻿namespace YAPL.CodeAnalysis.Parsing.Nodes; 
+﻿namespace YAPL.Frontend.Parsing.Nodes.Statements; 
 
 public class Program : Statement {
 	public override NodeType Type => NodeType.PROGRAM;
-	public List<Statement?> Body { get; }
+	public List<Statement> Body { get; }
 
-	public Program(List<Statement?> body) {
+	public Program(List<Statement> body) {
 		Body = body;
 	}
 

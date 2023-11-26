@@ -1,13 +1,13 @@
-﻿namespace YAPL.CodeAnalysis.Lexing;
+﻿namespace YAPL.Frontend.lexing;
 
 using Errors;
-using System.Collections.Specialized;
 using util;
 
 public class Lexer {
 	private readonly Dictionary<string, TokenType> KEYWORDS = new()
 	{ 
 	{ "let", TokenType.LET }, 
+	{ "null", TokenType.NULL }, 
 	};
 
 	public List<Token> tokenize(string sourceCode) {
@@ -48,7 +48,7 @@ public class Lexer {
 					} else if (IsBlank(src.At())) {
 						src.Shift();
 					}
-					else throw new UnrecognizedCharacterError($"Unrecognized character found while lexing: '{src.At()}'.", null);
+					else throw new UnrecognizedCharacterError($"Unrecognized character found while lexing: '{src.At()}'.");
 					
 
 					break;

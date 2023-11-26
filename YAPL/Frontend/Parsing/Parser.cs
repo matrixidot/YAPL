@@ -1,17 +1,18 @@
-﻿namespace YAPL.CodeAnalysis.Parsing;
+﻿namespace YAPL.Frontend.Parsing;
 
 using Errors;
-using Lexing;
-using Nodes;
+using lexing;
+using Nodes.Expressions;
+using Nodes.Statements;
 
 public class Parser {
-	private List<Token> tokens;
+	private List<Token> tokens = new();
 
 	public Program produceAST(string sourceCode) {
 		Lexer lexer = new();
 		tokens = lexer.tokenize(sourceCode);
 		
-		List<Statement?> body = new();
+		List<Statement> body = new();
 		
 		while (NotEof()) {
 			body.Add(ParseStmt());
@@ -57,6 +58,9 @@ public class Parser {
 		TokenType tk = At().Type;
 
 		switch (tk) { 
+		case TokenType.NULL:
+			Eat();
+			return new NullLiteral();
 		case TokenType.IDENTIFIER :
 			return new Identifier(Eat().Value);
 		case TokenType.NUMBER :
@@ -68,7 +72,7 @@ public class Parser {
 			return value;
 		default :
 			throw new UnexpectedTokenError($"Unexpected token found during parsing: <{At()}>.");
-		};
+		}
 	}
 
 

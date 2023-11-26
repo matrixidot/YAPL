@@ -1,4 +1,4 @@
-﻿namespace YAPL.CodeAnalysis.Parsing.Nodes; 
+﻿namespace YAPL.Frontend.Parsing.Nodes.Expressions; 
 
 public class BinaryExpr : Expression {
 	public override NodeType Type => NodeType.BINARY_EXPR;
