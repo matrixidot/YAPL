@@ -1,8 +1,10 @@
-﻿namespace YAPL.util; 
+﻿namespace YAPL.util;
+
+using CodeAnalysis.Lexing;
 
 public static class Extensions {
-	public static StringEnumerator getStringEnumerator(this string str) {
-		return new StringEnumerator(str);
+	public static StringIterator GetIterator(this string str) {
+		return new StringIterator(str);
 	}
 	
 }

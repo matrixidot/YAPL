@@ -1,13 +1,13 @@
 ﻿namespace YAPL.util; 
 
-public class StringEnumerator {
+public class StringIterator {
 	private readonly string str;
 
 	private readonly char[] array;
 
 	private int index = 0;
 
-	public StringEnumerator(string str) {
+	public StringIterator(string str) {
 		this.str = str;
 		array = str.ToCharArray();
 	}
@@ -21,7 +21,7 @@ public class StringEnumerator {
 			index++;
 	}
 
-	public char Current() {
+	public char At() {
 		try {
 			return array[index];
 		}
@@ -31,7 +31,7 @@ public class StringEnumerator {
 	}
 
 	public char Shift() {
-		char toRet = Current();
+		char toRet = At();
 		Step();
 		return toRet;
 	}
