@@ -1,7 +1,7 @@
 ﻿namespace YAPL.Runtime.Values; 
 
 public class NullValue : RuntimeValue {
-	public override ValueType Type => ValueType.NULL;
+	public override ValueTypes Type => ValueTypes.NULL;
 
 	public string Value => "null";
 

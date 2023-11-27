@@ -1,6 +1,7 @@
 ﻿namespace YAPL.Runtime.Values; 
 
-public enum ValueType {
+public enum ValueTypes {
 	NULL,
 	NUMBER,
+	BOOLEAN,
 }

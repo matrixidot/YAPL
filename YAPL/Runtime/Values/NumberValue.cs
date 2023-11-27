@@ -1,7 +1,7 @@
 ﻿namespace YAPL.Runtime.Values; 
 
 public class NumberValue : RuntimeValue {
-	public override ValueType Type => ValueType.NUMBER;
+	public override ValueTypes Type => ValueTypes.NUMBER;
 	public double Value { get; }
 
 	public NumberValue(double value) {

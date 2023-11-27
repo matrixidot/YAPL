@@ -3,7 +3,7 @@
 public class Identifier : Expression {
 	public override NodeType Type => NodeType.IDENTIFIER;
 
-	private string Symbol { get; }
+	public string Symbol { get; }
 
 	public Identifier(string symbol) {
 		Symbol = symbol;

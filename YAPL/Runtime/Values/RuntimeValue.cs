@@ -1,6 +1,6 @@
 ﻿namespace YAPL.Runtime.Values; 
 
 public abstract class RuntimeValue {
-	public abstract ValueType Type { get; }
+	public abstract ValueTypes Type { get; }
 	
 }
